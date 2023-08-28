@@ -68,6 +68,7 @@ results = model.evaluate(cached_test, return_dict=True)
 print(results)
 
 # Create a model that takes in raw query features, and
+# https://www.tensorflow.org/recommenders/api_docs/python/tfrs/layers/factorized_top_k/BruteForce
 index = tfrs.layers.factorized_top_k.BruteForce(model.user_model)
 # recommends movies out of the entire movies dataset.
 index.index_from_dataset(

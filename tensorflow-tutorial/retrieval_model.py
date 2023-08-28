@@ -10,6 +10,7 @@ import tensorflow_datasets as tfds
 
 import tensorflow_recommenders as tfrs
 
+# Based largely on this code: https://www.tensorflow.org/recommenders/examples/basic_retrieval
 
 class SimpleRetrievalModel(tfrs.Model):
 
