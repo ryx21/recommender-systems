@@ -35,10 +35,10 @@ A few notes on performance expectations:
 I plan to break the project down into a few phases.
 
 1. Build the simplest recommender system possible and benchmark performance against a validation set. This doesn't even have to be an ML model. Aim of this is to start getting a feel for the data available and what metrics are sensible.
-3. Build a slightly more complex ML recommender system and compare performance against the simple model.
-4. Deploy one of the recommenders with a minimal API
-5. Build a nicer front-end to serve the model(s)
-6. Iterate and tackle the more advanced features
+2. Build a slightly more complex ML recommender system and compare performance against the simple model.
+3. Deploy one of the recommenders with a minimal API
+4. Build a nicer front-end to serve the model(s)
+5. Iterate and tackle the more advanced features
 
 ## Project Progress
 
@@ -62,19 +62,48 @@ Resources:
 Todo:
 * Remind myself how attention works
 
-### 3. Simple Deployment
 
-I need to learn how to design an API. These resources look good:
+### 3. Front End
 
-Resources:
-* https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
-* https://masteringbackend.com/posts/api-design-best-practices
+After reading [this](https://www.bighuman.com/blog/backend-frontend-web-development-where-do-you-start) article, I decide it's easier to build the front-end first before the backend.
 
+First we'll build a simple end-to-end prototype using `streamlit`. This can be spun up using:
 
-### 4. Front End
+```
+cd prototype
+streamlit run app.py
+```
 
 I need to learn how to build a web-application - `react` seems like a popular framework.
 
 Resources:
 * https://react.dev/learn
+* https://huggingface.co/inference-api
+* https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0
+* https://huggingface.co/docs/api-inference/detailed_parameters
 
+
+### 4. Simple Deployment
+
+I need to learn how to build an API. These are my first pass at naive requirements.
+
+API Design Notes:
+1. An endpoint which returns a list of N recommended recipe ids when provided with a user or session id
+    * Looks up in a database the list of recipes the user has previously liked
+    * Prepares the model inputs based on this, and returns a list of N liked recipes
+    * Optionally: exclude ids a user has already interacted with
+    * Optionally: sample recipes from a distribution to achieve some randomness
+2. An endpoint which fetches all the details of a recipe to be displayed to the user when provided a recipe id
+
+Resources:
+* https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design
+* https://masteringbackend.com/posts/api-design-best-practices
+* https://aws.amazon.com/getting-started/hands-on/build-web-app-s3-lambda-api-gateway-dynamodb/
+* https://aws.amazon.com/getting-started/hands-on/?intClick=gsrc_navbar&getting-started-all.sort-by=item.additionalFields.content-latest-publish-date&getting-started-all.sort-order=desc&awsf.getting-started-category=*all&awsf.getting-started-content-type=*all
+* https://aws.amazon.com/blogs/machine-learning/how-to-deploy-deep-learning-models-with-aws-lambda-and-tensorflow/
+* https://aws.amazon.com/blogs/compute/deploying-machine-learning-models-with-serverless-templates/
+* https://www.youtube.com/watch?v=0Sh9OySCyb4&ab_channel=BeABetterDev
+* https://www.youtube.com/watch?v=bYkjYojgccY&ab_channel=BeABetterDev
+
+* https://towardsdatascience.com/serverless-deployment-of-machine-learning-models-on-aws-lambda-5bd1ca9b5c42
+    * https://aws.amazon.com/blogs/compute/operating-lambda-performance-optimization-part-1/
