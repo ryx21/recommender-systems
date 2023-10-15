@@ -43,7 +43,11 @@ def _transform_text_columns(df, columns, n_features=20) -> pd.DataFrame:
 
 
 @st.cache_data
-def recipe_preprocessing_pipeline(data: Path):
+def recipe_preprocessing_pipeline(data: Path, cached_path: Path, read_only: bool=False):
+
+    if read_only:
+        df = pd.read_csv(cached_path, index_col="id")
+        return df
 
     df = pd.read_csv(data)
     for col in ["tags", "nutrition", "steps", "ingredients"]:
@@ -69,6 +73,8 @@ def recipe_preprocessing_pipeline(data: Path):
     df = df.dropna()
     df["id"] = df["id"].apply(int)
     df = df.set_index("id")
+
+    df.to_csv(cached_path)
     return df
 
 
@@ -142,15 +148,19 @@ class SessionStateManager:
         if self.empty_queue():
             return None
         else:
-            return st.session_state[ITEM_QUEUED_KEY].pop()
+            item = st.session_state[ITEM_QUEUED_KEY].pop()
+            if exclude_seen and item in st.session_state[ITEM_INTERACTIONS_KEY]:
+                return self.next_item(True)
+            else:
+                return item
 
     def is_startup(self):
         "Return True if first session, else false"
         if STARTUP not in st.session_state:
             st.session_state[STARTUP] = True
-            return False
-        else:
             return True
+        else:
+            return False
 
     def dislike_item(self, item_id: int):
         st.session_state[ITEM_INTERACTIONS_KEY][item_id] = False

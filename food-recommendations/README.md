@@ -74,8 +74,6 @@ cd prototype
 streamlit run app.py
 ```
 
-I need to learn how to build a web-application - `react` seems like a popular framework.
-
 Resources:
 * https://react.dev/learn
 * https://huggingface.co/inference-api
@@ -104,6 +102,5 @@ Resources:
 * https://aws.amazon.com/blogs/compute/deploying-machine-learning-models-with-serverless-templates/
 * https://www.youtube.com/watch?v=0Sh9OySCyb4&ab_channel=BeABetterDev
 * https://www.youtube.com/watch?v=bYkjYojgccY&ab_channel=BeABetterDev
-
 * https://towardsdatascience.com/serverless-deployment-of-machine-learning-models-on-aws-lambda-5bd1ca9b5c42
     * https://aws.amazon.com/blogs/compute/operating-lambda-performance-optimization-part-1/
